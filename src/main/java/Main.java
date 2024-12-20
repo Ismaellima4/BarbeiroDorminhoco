@@ -1,24 +1,17 @@
 public class Main {
     public static void main(String[] args) {
-
+        // Cria a instância da barbearia
         Barbearia barbearia = new Barbearia();
-        barbearia.setBarbeiro(new Barbeiro(barbearia));
 
-        // Cria e inicia a thread do barbeiro
-        Barbeiro barbeiro =  barbearia.getBarbeiro();
-
+        // Cria e inicia o barbeiro
+        Barbeiro barbeiro = new Barbeiro(barbearia);
+        barbearia.setBarbeiro(barbeiro);
         barbeiro.start();
 
-        // Cria e adiciona os clientes à fila
+        // Cria a instância de clientes
         for (int i = 1; i <= 5; i++) {
-            Cliente cliente = new Cliente(i);
-            if (i == 1) {
-                // Cliente 1 entra diretamente e corta o cabelo
-                System.out.println("O barbeiro acordou!");
-                barbeiro.cortarCabelo(cliente);
-            } else {
-                barbearia.adicionarCliente(cliente);
-            }
+            Cliente cliente = new Cliente(i, barbearia);
+            cliente.start();
         }
     }
 }
